@@ -25,7 +25,8 @@ let rec dfs_tsort v verts pre post timer sorted =
 			| elem :: t ->
 				visit t (dfs_tsort elem verts pre post timer acc)
 		in
-			let visitResult = visit (find v verts) sorted in
+			let visitResult = try visit (find v verts) sorted
+							  with Not_found -> sorted in
 			post := add v !timer !post;
 			timer := !timer + 1;
 			v :: visitResult
